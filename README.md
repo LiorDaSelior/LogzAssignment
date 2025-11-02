@@ -16,10 +16,11 @@ This project fetches weather data from multiple sources (e.g., OpenWeather API, 
    ```powershell
    irm https://astral.sh/uv/install.ps1 | iex
    ```
-
-2. 
-
-   After installation, make sure `uv` is in your PATH.
+   
+    Or using PyPI:
+    ```bash
+   pip install uv
+   ```
 
 2. **Clone the repository**
    ```bash
@@ -33,13 +34,6 @@ This project fetches weather data from multiple sources (e.g., OpenWeather API, 
    uv sync
    ```
    This ensures your project's dependencies are aligned with the lock file.
-
-4. **Run your script through `uv`**  
-   To execute your main program:
-   ```bash
-   uv run main.py
-   ```
-   This ensures the correct environment is used for your script.
 
 ## Configuration
 
@@ -77,10 +71,10 @@ The project reads a `settings.json` file in the directory you supply. Example:
 - **`polling_time`**  
   A positive integer indicating the polling interval (in seconds) used when instantiating each data source.
 
-## Running the Application
+## Running the Application (in working directory)
 
 ```bash
-uv run main.py
+uv run python -m src.main
 ```
 
 ### What happens:
