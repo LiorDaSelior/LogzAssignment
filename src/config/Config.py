@@ -1,0 +1,50 @@
+import json
+from pathlib import Path
+from typing import Dict, List, Any
+
+
+class ConfigError(Exception):
+    """Custom exception for invalid config format."""
+    pass
+
+
+class Config:
+    def __init__(self):
+        self.path = Path("settings.json")
+        self.source_city_map: Dict[str, List[str]] = {}
+        self.polling_time: int = 0
+        self._load()
+
+    def _load(self):
+        if not self.path.exists():
+            raise ConfigError(f"Config file not found: {self.path}")
+
+        try:
+            with self.path.open("r", encoding="utf-8") as f:
+                data: Any = json.load(f)
+        except json.JSONDecodeError as e:
+            raise ConfigError(f"Invalid JSON format: {e}")
+
+        # Validate top-level keys
+        if not isinstance(data, dict):
+            raise ConfigError("Config must be a JSON object")
+        if "source_city_map" not in data or "polling_time" not in data:
+            raise ConfigError("Config must contain 'source_city_map' and 'polling_time' keys")
+
+        # Validate source_city_map
+        scm = data["source_city_map"]
+        if not isinstance(scm, dict):
+            raise ConfigError("'source_city_map' must be a dictionary")
+        for key, value in scm.items():
+            if not isinstance(key, str):
+                raise ConfigError(f"Source name must be a string, got {key}")
+            if not isinstance(value, list) or not all(isinstance(city, str) for city in value):
+                raise ConfigError(f"Cities for source '{key}' must be a list of strings")
+
+        self.source_city_map = scm
+
+        # Validate polling_time
+        pt = data["polling_time"]
+        if not isinstance(pt, int) or pt <= 0:
+            raise ConfigError("'polling_time' must be a positive integer")
+        self.polling_time = pt
