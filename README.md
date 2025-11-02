@@ -43,13 +43,24 @@ This project fetches weather data from multiple sources (e.g., OpenWeather API, 
 
 ## Configuration
 
+   Copy the example environment file and update it with your actual values:
+   
+   Open the `.env` file and replace the placeholder values with your actual configuration:
+   - `LOCAL_CSV_PATH`: Full path to your local CSV file containing weather data
+   - `WEATHERAPI_API_KEY`: Your API key from WeatherAPI
+   - `OPENWEATHER_API_KEY`: Your API key from OpenWeather
+   - `LOGZ_API_TOKEN`: Your Logz.io API token for shipping data
+   
+   The endpoint URLs are pre-configured but can be modified if needed.
+
 The project reads a `settings.json` file in the directory you supply. Example:
 
 ```json
 {
   "source_city_map": {
     "open_weather": ["Tel Aviv", "Paris"],
-    "csv_file": ["London", "Berlin"]
+    "weather_api": ["Tel Aviv"],
+    "csv_file": ["Sydney", "Berlin"]
   },
   "polling_time": 5
 }
@@ -59,9 +70,9 @@ The project reads a `settings.json` file in the directory you supply. Example:
 
 - **`source_city_map`**  
   A mapping where:
-  - Keys are the source provider names matching your data source classes' `SOURCE_PROVIDER_NAME` (e.g., `open_weather`, `csv_file`).
+  - Keys are the source provider names matching your data source classes' `SOURCE_PROVIDER_NAME` (`weather_api`, `open_weather`, `csv_file`).
   - Values are arrays of cities (strings) to be polled by that provider.
-  - Unknown keys (e.g., `"undddd"`) will be filtered out automatically at runtime.
+  - Unknown keys will be filtered out automatically at runtime.
 
 - **`polling_time`**  
   A positive integer indicating the polling interval (in seconds) used when instantiating each data source.

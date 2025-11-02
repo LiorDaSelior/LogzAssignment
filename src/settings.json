@@ -1,7 +1,7 @@
 {
     "source_city_map": {
         "open_weather": ["Tel Aviv", "Paris"],
-        "csv_file": ["London", "Berlin"]
+        "csv_file": ["Sydney", "Berlin"]
     },
     "polling_time": 5
 }
