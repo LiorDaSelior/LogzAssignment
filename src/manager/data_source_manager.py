@@ -36,8 +36,10 @@ class DataSourceManager:
         return self.sources
 
     def _poll_all(self) -> Generator:
-        for source in self.sources:
-            yield from source.poll()
+        iterators = [source.poll() for source in self.sources]
+        while True:
+            for it in iterators:
+                yield next(it)
 
     def start(self):
         self._create_sources()
