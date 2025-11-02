@@ -1,8 +1,12 @@
+import time
 from abc import ABC, abstractmethod
 from typing import Any, Generator
 
 from src.weather_data import WeatherData
 
+class PollingError(Exception):
+    """Custom exception for invalid polling."""
+    pass
 
 class AbstractDataSource(ABC):
     SOURCE_PROVIDER_NAME = "undefined"
@@ -16,5 +20,11 @@ class AbstractDataSource(ABC):
         pass
 
     def poll(self) -> Generator[WeatherData, Any, None]:
-        for city in self.cities:
-            yield self.poll_city(city)
+        while True:
+            for city in self.cities:
+                try:
+                    yield self.poll_city(city)
+                except PollingError as e:
+                    print(f"PollingError: {e}")
+                    continue
+            time.sleep(self.polling_time)

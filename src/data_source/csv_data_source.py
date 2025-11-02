@@ -1,6 +1,6 @@
 import os
 
-from src.data_source.abstract_data_source import AbstractDataSource
+from src.data_source.abstract_data_source import AbstractDataSource, PollingError
 from src.weather_data import WeatherData
 import pandas as pd
 from dotenv import load_dotenv
@@ -18,8 +18,7 @@ class CsvDataSource(AbstractDataSource):
         current_df = pd.read_csv(self.CSV_SOURCE_PATH)
         city_df = current_df[current_df["city"] == city]
         if len(city_df) == 0:
-            # TODO: add custom exception
-            raise Exception(f"City {city} not found")
+            raise PollingError(f"City {city} not found")
         return self.transform_raw_data_to_weather_data(city_df.iloc[0], city)
 
     def transform_raw_data_to_weather_data(self, data, city):
