@@ -8,18 +8,26 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class CsvDataSource(AbstractDataSource):
+    CSV_SOURCE_PATH = os.getenv("LOCAL_CSV_PATH")
+
     def __init__(self, cities : list[str], polling_time : int):
         super().__init__(cities, polling_time, "csv_file")
-        self.csv_source_path = os.getenv("LOCAL_CSV_PATH")
 
     def poll_city(self, city: str) -> WeatherData:
-        current_df = pd.read_csv(self.csv_source_path)
+        current_df = pd.read_csv(self.CSV_SOURCE_PATH)
         city_df = current_df[current_df["city"] == city]
         if len(city_df) == 0:
             # TODO: add custom exception
             raise Exception(f"City {city} not found")
-        current_data_row = city_df.iloc[0]
-        return WeatherData(city, current_data_row["temperature"], current_data_row["description"], self.source_provider_name)
+        return self.transform_raw_data_to_weather_data(city_df.iloc[0], city)
+
+    def transform_raw_data_to_weather_data(self, data, city):
+        return WeatherData(
+            city = city,
+            temperature_celsius = data["temperature"],
+            description = data["description"],
+            source_provider = self.source_provider_name,
+        )
 
 if __name__ == "__main__":
     temp = CsvDataSource(cities=["Berlin", "Sydney"], polling_time=1)
