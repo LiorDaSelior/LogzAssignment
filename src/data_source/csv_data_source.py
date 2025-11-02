@@ -1,6 +1,6 @@
 import os
 
-from src.polling.abstract_data_source import AbstractDataSource
+from src.data_source.abstract_data_source import AbstractDataSource
 from src.weather_data import WeatherData
 import pandas as pd
 from dotenv import load_dotenv
