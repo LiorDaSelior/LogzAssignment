@@ -54,5 +54,6 @@ class DataSourceManager:
                 data=json_str + "\n"  # newline-delimited per spec
             )
             response.raise_for_status()
+            print("Sent to endpoint: " + str(weather_data))
         except Exception as e:
             print(f"Failed to send data for {weather_data.city}: {e}")
