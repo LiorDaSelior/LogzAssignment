@@ -5,8 +5,9 @@ from src.weather_data import WeatherData
 
 
 class AbstractDataSource(ABC):
-    def __init__(self, cities : list[str], polling_time : float, source_provider_name : str):
-        self.source_provider_name = source_provider_name
+    SOURCE_PROVIDER_NAME = "undefined"
+
+    def __init__(self, cities : list[str], polling_time : float):
         self.cities = cities
         self.polling_time = polling_time
 

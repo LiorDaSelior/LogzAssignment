@@ -11,9 +11,10 @@ load_dotenv()
 class WeatherApiDataSource(AbstractDataSource):
     API_KEY = os.getenv('WEATHERAPI_API_KEY', '')
     BASE_URL = "https://" + os.getenv('WEATHERAPI_CURRENT_WEATHER_ENDPOINT', "api.weatherapi.com/v1/current.json")
+    SOURCE_PROVIDER_NAME = "weather_api"
 
     def __init__(self, cities : list[str], polling_time : int):
-        super().__init__(cities, polling_time, "weather_api")
+        super().__init__(cities, polling_time)
 
     def poll_city(self, city: str) -> WeatherData:
         params = {
@@ -33,7 +34,7 @@ class WeatherApiDataSource(AbstractDataSource):
             city = city,
             temperature_celsius = temperature,
             description = description,
-            source_provider = self.source_provider_name,
+            source_provider = self.SOURCE_PROVIDER_NAME,
         )
 
 if __name__ == "__main__":

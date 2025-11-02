@@ -11,9 +11,10 @@ load_dotenv()
 class OpenWeatherDataSource(AbstractDataSource):
     API_KEY = os.getenv('OPENWEATHER_API_KEY', '')
     BASE_URL = "https://" + os.getenv('OPENWEATHER_CURRENT_WEATHER_ENDPOINT', "https://api.openweathermap.org/data/2.5/weather")
+    SOURCE_PROVIDER_NAME = "open_weather"
 
     def __init__(self, cities : list[str], polling_time : int):
-        super().__init__(cities, polling_time, "open_weather")
+        super().__init__(cities, polling_time)
 
     def poll_city(self, city: str) -> WeatherData:
         params = {
@@ -33,7 +34,7 @@ class OpenWeatherDataSource(AbstractDataSource):
             city = city,
             temperature_celsius = temperature,
             description = description,
-            source_provider = self.source_provider_name,
+            source_provider = self.SOURCE_PROVIDER_NAME,
         )
 
 if __name__ == "__main__":

@@ -9,9 +9,10 @@ load_dotenv()
 
 class CsvDataSource(AbstractDataSource):
     CSV_SOURCE_PATH = os.getenv("LOCAL_CSV_PATH")
+    SOURCE_PROVIDER_NAME = "csv_file"
 
     def __init__(self, cities : list[str], polling_time : int):
-        super().__init__(cities, polling_time, "csv_file")
+        super().__init__(cities, polling_time)
 
     def poll_city(self, city: str) -> WeatherData:
         current_df = pd.read_csv(self.CSV_SOURCE_PATH)
@@ -26,7 +27,7 @@ class CsvDataSource(AbstractDataSource):
             city = city,
             temperature_celsius = data["temperature"],
             description = data["description"],
-            source_provider = self.source_provider_name,
+            source_provider = self.SOURCE_PROVIDER_NAME,
         )
 
 if __name__ == "__main__":
