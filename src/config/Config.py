@@ -1,4 +1,4 @@
-import json
+import yaml
 from pathlib import Path
 from typing import Dict, List, Any
 
@@ -10,20 +10,16 @@ class ConfigError(Exception):
 
 class Config:
     def __init__(self):
-        self.path = Path("settings.json")
         self.source_city_map: Dict[str, List[str]] = {}
         self.polling_time: int = 0
         self._load()
 
     def _load(self):
-        if not self.path.exists():
-            raise ConfigError(f"Config file not found: {self.path}")
-
         try:
-            with self.path.open("r", encoding="utf-8") as f:
-                data: Any = json.load(f)
-        except json.JSONDecodeError as e:
-            raise ConfigError(f"Invalid JSON format: {e}")
+            with open("config/config.yaml", "r") as f:
+                data = yaml.safe_load(f)
+        except FileNotFoundError as e:
+            raise ConfigError(f"No config file found: {e}")
 
         # Validate top-level keys
         if not isinstance(data, dict):
