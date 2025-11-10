@@ -89,3 +89,4 @@ uv run python -m src.main
 - The workflow using `uv` replaces a manual `pip` + `venv` setup — `uv` handles environment creation, dependency installation, and execution.
 - Use `uv sync` after modifying dependencies to ensure lock file consistency.
 - If you're not adding any dependencies, you can still benefit from `uv run` for simpler environment usage.
+
