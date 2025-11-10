@@ -15,6 +15,17 @@ spec:
       containers:
       - name: weatherapp-container
         image: theclaw44/weather_app:latest
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/config/config.yaml
+            subPath: config.yaml
+          - name: config-volume
+            mountPath: /app/data/data.csv
+            subPath: data.csv
         envFrom:
           - secretRef:
               name: weatherapp-secret
+      volumes:
+        - name: config-volume
+          configMap:
+            name: weatherapp-config
