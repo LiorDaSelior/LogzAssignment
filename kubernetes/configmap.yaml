@@ -1,10 +1,22 @@
 apiVersion: v1
-data:
-  config.yaml: "source_city_map:\r\n  open_weather:\r\n    - Tel Aviv\r\n    - Paris\r\n
-    \ csv_file:\r\n    - Sydney\r\n    - Berlin\r\n  weather_api:\r\n    - Sydney\r\n
-    \   - Tel Aviv\r\n    - Berlin\r\npolling_time: 5\r\n"
-  data.csv: "city,temperature,description\r\nBerlin,18.5,\"Scattered clouds\"\r\nSydney,22.1,\"Sunny\"\r\n"
 kind: ConfigMap
 metadata:
   name: weatherapp-config
   namespace: default
+data:
+  config.yaml: |
+    source_city_map:
+      open_weather:
+        - Tel Aviv
+        - Paris
+      csv_file:
+        - Rehovot
+      weather_api:
+        - Sydney
+        - Tel Aviv
+        - Berlin
+    polling_time: 5
+  data.csv: |
+    city,temperature,description
+    Rehovot,18.5,"Scattered clouds"
+    Sydney,22.1,"Sunny"
