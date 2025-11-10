@@ -20,7 +20,7 @@ spec:
             mountPath: /app/config/config.yaml
             subPath: config.yaml
           - name: config-volume
-            mountPath: /app/data/data.csv
+            mountPath: /app/example-data/data.csv
             subPath: data.csv
         envFrom:
           - secretRef:

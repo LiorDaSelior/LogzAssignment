@@ -6,8 +6,5 @@ data:
   data.csv: "city,temperature,description\r\nBerlin,18.5,\"Scattered clouds\"\r\nSydney,22.1,\"Sunny\"\r\n"
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2025-11-10T13:03:19Z"
   name: weatherapp-config
   namespace: default
-  resourceVersion: "107198"
-  uid: a1f45c12-160c-46df-86c4-7279459e612c

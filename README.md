@@ -90,3 +90,49 @@ uv run python -m src.main
 - Use `uv sync` after modifying dependencies to ensure lock file consistency.
 - If you're not adding any dependencies, you can still benefit from `uv run` for simpler environment usage.
 
+## Docker Instructions
+
+### 1. Build the Docker image
+
+```bash
+docker build -t weather_app:latest .
+```
+
+### 2. Run the container locally
+
+```bash
+docker run --env-file .env weather_app:latest
+```
+
+### 3. Push the image to a registry
+
+Replace `<your-dockerhub-username>` with your Docker Hub username:
+
+```bash
+docker tag weather_app:latest <your-dockerhub-username>/weather_app:latest
+docker push <your-dockerhub-username>/weather_app:latest
+```
+
+## Kubernetes Instructions
+
+### 1. Switch to your Kubernetes directory
+
+```bash
+cd kubernetes
+```
+
+### 2. Apply ConfigMap and Secrets
+
+```bash
+kubectl apply -f configmap.yaml
+kubectl apply -f secret.yaml
+```
+
+### 3. Deploy the application
+
+```bash
+kubectl apply -f deployment.yaml
+```
+
+## Notes
+- If you want to use the image you pushed in the Kubernetes deployment, put `<your-dockerhub-username>/weather_app:latest` at `image` attribute in the `deployment.yaml` file.
