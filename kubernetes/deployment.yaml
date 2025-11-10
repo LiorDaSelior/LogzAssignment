@@ -15,3 +15,6 @@ spec:
       containers:
       - name: weatherapp-container
         image: theclaw44/weather_app:latest
+        envFrom:
+          - secretRef:
+              name: weatherapp-secret
